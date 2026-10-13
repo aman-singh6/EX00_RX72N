@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 1800 1840" role="img" aria-labelledby="title description" style="height:auto;display:block">
+  <title id="title">Requirement 1 RC Car Behavior Flowchart</title>
+  <desc id="description">Two-lane flowchart for push-button LED2 and CarStatus behavior and toggle-enabled LED1 distance detection.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#435363"/>
+    </marker>
+    <style>
+      .bg { fill: #f4f6f3; }
+      .header { fill: #132e32; }
+      .title { font: 700 34px 'Segoe UI', sans-serif; fill: #ffffff; }
+      .subtitle { font: 400 18px 'Segoe UI', sans-serif; fill: #dce7e4; }
+      .lane { fill: #ffffff; stroke: #d1ddd8; stroke-width: 2; }
+      .laneTitle { font: 700 20px 'Segoe UI', sans-serif; fill: #19766d; }
+      .terminal { fill: #132e32; stroke: #132e32; stroke-width: 2.5; }
+      .process { fill: #e5f2ef; stroke: #28796e; stroke-width: 2.5; }
+      .decision { fill: #fff4d8; stroke: #c18320; stroke-width: 2.5; }
+      .output { fill: #ffffff; stroke: #376c68; stroke-width: 2.5; }
+      .terminalText { font: 700 18px 'Segoe UI', sans-serif; fill: #ffffff; text-anchor: middle; }
+      .text { font: 500 17px 'Segoe UI', sans-serif; fill: #1d3035; text-anchor: middle; }
+      .small { font: 500 15px 'Segoe UI', sans-serif; fill: #1d3035; text-anchor: middle; }
+      .edge { fill: none; stroke: #435363; stroke-width: 2.5; marker-end: url(#arrow); }
+      .edgeNoArrow { fill: none; stroke: #435363; stroke-width: 2.5; }
+      .label { font: 600 15px 'Segoe UI', sans-serif; fill: #344c53; }
+      .callout { fill: #132e32; }
+      .calloutText { font: 600 17px 'Segoe UI', sans-serif; fill: #ffffff; text-anchor: middle; }
+      .legend { font: 500 14px 'Segoe UI', sans-serif; fill: #40545a; }
+    </style>
+  </defs>
+  <rect class="bg" width="1800" height="1840"/>
+  <rect class="header" width="1800" height="130"/>
+  <text class="title" x="70" y="58">Requirement 1 | RC Car Behavior</text>
+  <text class="subtitle" x="70" y="96">Push-button status and toggle-enabled distance detection</text>
+
+  <ellipse class="terminal" cx="900" cy="190" rx="155" ry="32"/>
+  <text class="terminalText" x="900" y="197">Start</text>
+  <path class="edge" d="M900 222 V246"/>
+  <rect class="process" x="680" y="250" width="440" height="68" rx="10"/>
+  <text class="text" x="900" y="291">Initialize CAN1, GPIO, and 1 ms timer</text>
+  <path class="edge" d="M900 318 V338"/>
+  <rect class="process" x="680" y="342" width="440" height="72" rx="10"/>
+  <text class="text" x="900" y="371"><tspan x="900">Initial state: LED2 OFF;</tspan><tspan x="900" dy="23">CarStatus = 0</tspan></text>
+  <path class="edge" d="M900 414 V434"/>
+  <ellipse class="terminal" cx="900" cy="466" rx="210" ry="32"/>
+  <text class="terminalText" x="900" y="473">Repeat control logic every 1 ms</text>
+  <path class="edgeNoArrow" d="M900 498 V522 H465 V580"/>
+  <path class="edge" d="M900 522 H1330 V580"/>
+
+  <rect class="lane" x="55" y="550" width="810" height="930" rx="12"/>
+  <rect class="lane" x="935" y="550" width="810" height="930" rx="12"/>
+  <text class="laneTitle" x="85" y="588">PUSH BUTTON / LED2 / CARSTATUS</text>
+  <text class="laneTitle" x="965" y="588">TOGGLE / LED1 / DISTANCE SENSOR</text>
+
+  <rect class="process" x="245" y="610" width="440" height="76" rx="10"/>
+  <text class="text" x="465" y="641"><tspan x="465">Read and debounce PORTK.PIDR.BIT.B0</tspan><tspan x="465" dy="23">Track continuous button hold time</tspan></text>
+  <path class="edge" d="M465 686 V710"/>
+  <polygon class="decision" points="465,714 645,766 465,818 285,766"/>
+  <text class="text" x="465" y="761"><tspan x="465">Held continuously</tspan><tspan x="465" dy="22">for 10 seconds?</tspan></text>
+  <path class="edge" d="M285 766 H175 V826"/>
+  <text class="label" x="205" y="751">Yes</text>
+  <rect class="output" x="65" y="830" width="215" height="98" rx="10"/>
+  <text class="small" x="172" y="864"><tspan x="172">10 s+: LED2 blinks</tspan><tspan x="172" dy="22">CarStatus = 2 while held</tspan></text>
+  <path class="edge" d="M465 818 V846"/>
+  <text class="label" x="480" y="840">No</text>
+  <polygon class="decision" points="465,850 640,900 465,950 290,900"/>
+  <text class="text" x="465" y="895"><tspan x="465">Debounced press</tspan><tspan x="465" dy="22">released?</tspan></text>
+  <path class="edge" d="M640 900 H665"/>
+  <text class="label" x="643" y="884">No</text>
+  <rect class="output" x="670" y="858" width="175" height="84" rx="10"/>
+  <text class="small" x="757" y="890"><tspan x="757">Keep current</tspan><tspan x="757" dy="21">LED2 / status</tspan></text>
+  <path class="edge" d="M465 950 V984"/>
+  <text class="label" x="480" y="975">Yes</text>
+  <rect class="process" x="245" y="988" width="440" height="82" rx="10"/>
+  <text class="text" x="465" y="1020"><tspan x="465">Wait 3 seconds after release,</tspan><tspan x="465" dy="23">then toggle LED2</tspan></text>
+  <path class="edge" d="M465 1070 V1094"/>
+  <polygon class="decision" points="465,1098 640,1148 465,1198 290,1148"/>
+  <text class="text" x="465" y="1154">LED2 ON?</text>
+  <path class="edge" d="M290 1148 H220 V1240"/>
+  <text class="label" x="240" y="1134">No</text>
+  <path class="edge" d="M640 1148 H690 V1240"/>
+  <text class="label" x="658" y="1134">Yes</text>
+  <rect class="output" x="75" y="1244" width="330" height="100" rx="10"/>
+  <text class="text" x="240" y="1279"><tspan x="240">LED2 OFF</tspan><tspan x="240" dy="23">CarStatus = 0</tspan></text>
+  <rect class="output" x="525" y="1244" width="330" height="100" rx="10"/>
+  <text class="text" x="690" y="1279"><tspan x="690">LED2 ON</tspan><tspan x="690" dy="23">CarStatus = 1</tspan></text>
+
+  <rect class="process" x="1090" y="610" width="480" height="76" rx="10"/>
+  <text class="text" x="1330" y="641"><tspan x="1330">LED1 is ON; receive MotorDuty and</tspan><tspan x="1330" dy="23">DistanceSensor and read toggle input</tspan></text>
+  <path class="edge" d="M1330 686 V710"/>
+  <polygon class="decision" points="1330,714 1515,764 1330,814 1145,764"/>
+  <text class="small" x="1330" y="759"><tspan x="1330">MotorDuty &gt; 0</tspan><tspan x="1330" dy="20">AND toggle ON?</tspan></text>
+  <path class="edge" d="M1515 764 H1535"/>
+  <text class="label" x="1519" y="749">No</text>
+  <rect class="output" x="1540" y="720" width="185" height="90" rx="10"/>
+  <text class="small" x="1632" y="752"><tspan x="1632">ObjectDetection</tspan><tspan x="1632" dy="20">Status = 0</tspan></text>
+  <path class="edge" d="M1330 814 V842"/>
+  <text class="label" x="1345" y="837">Yes</text>
+  <polygon class="decision" points="1330,846 1505,896 1330,946 1155,896"/>
+  <text class="text" x="1330" y="902">Distance 1-10?</text>
+  <path class="edge" d="M1155 896 H1145"/>
+  <text class="label" x="1160" y="880">Yes</text>
+  <rect class="output" x="945" y="855" width="195" height="96" rx="10"/>
+  <text class="small" x="1042" y="880"><tspan x="1042">LED1 ON</tspan><tspan x="1042" dy="19">CarStatus = 3</tspan><tspan x="1042" dy="19">DetectionStatus = 0</tspan></text>
+  <path class="edge" d="M1330 946 V984"/>
+  <text class="label" x="1345" y="978">No</text>
+  <polygon class="decision" points="1330,988 1505,1038 1330,1088 1155,1038"/>
+  <text class="text" x="1330" y="1044">Distance 11-100?</text>
+  <path class="edge" d="M1505 1038 H1530"/>
+  <text class="label" x="1508" y="1022">Yes</text>
+  <rect class="output" x="1535" y="990" width="190" height="96" rx="10"/>
+  <text class="small" x="1630" y="1015"><tspan x="1630">DetectionStatus = 2</tspan><tspan x="1630" dy="20">LED1 continuously ON</tspan></text>
+  <path class="edge" d="M1330 1088 V1124"/>
+  <text class="label" x="1345" y="1118">No</text>
+  <polygon class="decision" points="1330,1128 1505,1178 1330,1228 1155,1178"/>
+  <text class="text" x="1330" y="1184">Distance 101-255?</text>
+  <path class="edge" d="M1155 1178 H1145"/>
+  <text class="label" x="1160" y="1162">Yes</text>
+  <rect class="output" x="945" y="1136" width="195" height="96" rx="10"/>
+  <text class="small" x="1042" y="1161"><tspan x="1042">DetectionStatus = 1</tspan><tspan x="1042" dy="20">LED1 blinks</tspan></text>
+  <path class="edge" d="M1330 1228 V1260"/>
+  <text class="label" x="1345" y="1254">No (&gt;255)</text>
+  <rect class="output" x="1110" y="1264" width="440" height="90" rx="10"/>
+  <text class="text" x="1330" y="1297"><tspan x="1330">ObjectDetectionStatus = 0</tspan><tspan x="1330" dy="23">LED1 OFF for values above 255</tspan></text>
+
+  <rect class="callout" x="230" y="1530" width="1340" height="112" rx="12"/>
+  <text class="calloutText" x="900" y="1575"><tspan x="900">CANalyzer CAN ID 0x102: byte 0 = CarStatus · byte 1 = ObjectDetectionStatus</tspan><tspan x="900" dy="28">CarStatus: 0 = LED2 OFF · 1 = LED2 ON · 2 = 10 s hold fault · 3 = distance 1-10</tspan></text>
+  <ellipse class="terminal" cx="900" cy="1705" rx="190" ry="30"/>
+  <text class="terminalText" x="900" y="1712">Continue next timer tick</text>
+  <path class="edgeNoArrow" d="M900 1642 V1672"/>
+  <rect class="process" x="560" y="1760" width="300" height="48" rx="8"/>
+  <text class="legend" x="710" y="1790" text-anchor="middle">Rectangle = process / output</text>
+  <polygon class="decision" points="1030,1760 1060,1784 1030,1808 1000,1784"/>
+  <text class="legend" x="1200" y="1790" text-anchor="middle">Diamond = decision</text>
+  <ellipse class="terminal" cx="350" cy="1784" rx="28" ry="18"/>
+  <text class="legend" x="440" y="1790" text-anchor="middle">Oval = start / repeat</text>
+</svg>
