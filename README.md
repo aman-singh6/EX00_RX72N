@@ -46,17 +46,3 @@ VS Code 運用では `.project`、`.cproject`、`.settings/`、`.metadata/`、`E
 For the VS Code workflow, `.project`, `.cproject`, `.settings/`, `.metadata/`, and `Ex00_Rx72 HardwareDebug.launch` are unnecessary e2 studio metadata. These files and `build/` are excluded by `.gitignore`.
 
 
-
-
-LED 2 is OFF initially and CarStatus Signal on CANalyzer will set status as 0.
-if Push Button(PORTK.PIDR.BIT.B0) is pressed and released then  after 3 sec LED 2 will be ON and CarStatus Signal on CANalyzer will change status as 1
-if Push button is pressed and released again then after 3 sec LED 2 will be OFF and CarStatus Signal on CANalyzer will change status as 0. 
-If Push button is pressed for 10 sec more then LED2 wil start to blink conitnuosly and CarStatus Signal on CANalyzer will change status as 2. 
- 
-now if LED1 is ON and MotorDuty and DistanceSensor signal Value will start coming from CANAlyzer. 
-When Motor duty is more than 0 and if User presses Toggle switch(PORTK.PIDR.BIT.B1) to ON then Beolow logic will work. 
-if DistanceSensor value is coming between 101-255 then ObjectDetection Status signal on CANalyzer will set as 1 and LED 1 will start to blink,  
-if DistanceSensor value is coming between 11-100 then ObjectDetection Status signal on CANalyzer will set as 2 and LED 1 will continuously ON.  
-if DistanceSensor value is more than 255 then ObjectDetection Status signal on CANalyzer will set as 0. 
-Now here If Motor duty is more than 0 and Toggle switch is OFF  then ObjectDetection Status signal on CANalyzer will always be 0. 
-and when the value in distance sensor is between 1-10 then CarStatus Signal on CANalyzer will change to 3 and LED 1 will continuously ON. Now replace the code and create the code for above one
